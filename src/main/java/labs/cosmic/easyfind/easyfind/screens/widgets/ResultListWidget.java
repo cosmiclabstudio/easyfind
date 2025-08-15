@@ -1,7 +1,7 @@
-package net.fortytoo.easyfind.easyfind.screens.widgets;
+package labs.cosmic.easyfind.easyfind.screens.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fortytoo.easyfind.easyfind.screens.Spotlight;
+import labs.cosmic.easyfind.easyfind.screens.Spotlight;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.navigation.NavigationDirection;

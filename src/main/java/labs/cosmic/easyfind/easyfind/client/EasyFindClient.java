@@ -1,10 +1,10 @@
-package net.fortytoo.easyfind.easyfind.client;
+package labs.cosmic.easyfind.easyfind.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fortytoo.easyfind.easyfind.screens.Spotlight;
-import net.fortytoo.easyfind.easyfind.utils.ItemHistory;
+import labs.cosmic.easyfind.easyfind.screens.Spotlight;
+import labs.cosmic.easyfind.easyfind.utils.ItemHistory;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;

@@ -17,10 +17,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "net.fortytoo.easyfind.easyfind.client.EasyFindClient"
+      "labs.cosmic.easyfind.easyfind.client.EasyFindClient"
     ],
     "main": [
-      "net.fortytoo.easyfind.easyfind.EasyFind"
+      "labs.cosmic.easyfind.easyfind.EasyFind"
     ]
   },
   "depends": {

@@ -1,4 +1,4 @@
-package net.fortytoo.easyfind.easyfind.utils;
+package labs.cosmic.easyfind.easyfind.utils;
 
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;

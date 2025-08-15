@@ -1,4 +1,4 @@
-package net.fortytoo.easyfind.easyfind.utils;
+package labs.cosmic.easyfind.easyfind.utils;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.lwjgl.glfw.GLFW;

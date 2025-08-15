@@ -1,4 +1,4 @@
-package net.fortytoo.easyfind.easyfind.utils;
+package labs.cosmic.easyfind.easyfind.utils;
 
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
