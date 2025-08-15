@@ -1,6 +1,6 @@
-package net.fortytoo.easyfind.easyfind.screens.widgets;
+package labs.cosmic.easyfind.easyfind.screens.widgets;
 
-import net.fortytoo.easyfind.easyfind.config.ConfigAgent;
+import labs.cosmic.easyfind.easyfind.config.ConfigAgent;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;

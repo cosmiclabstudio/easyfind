@@ -1,10 +1,10 @@
-package net.fortytoo.easyfind.easyfind.utils;
+package labs.cosmic.easyfind.easyfind.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LogUtil {
-    public static final Logger LOGGER = LoggerFactory.getLogger("EFSpotlight");
+    public static final Logger LOGGER = LoggerFactory.getLogger("EasyFind");
     
     public static void info(String message) {
         LOGGER.info(message);

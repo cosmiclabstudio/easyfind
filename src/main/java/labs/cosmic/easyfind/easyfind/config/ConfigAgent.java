@@ -1,4 +1,4 @@
-package net.fortytoo.easyfind.easyfind.config;
+package labs.cosmic.easyfind.easyfind.config;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 

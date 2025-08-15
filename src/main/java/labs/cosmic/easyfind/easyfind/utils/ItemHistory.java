@@ -1,4 +1,4 @@
-package net.fortytoo.easyfind.easyfind.utils;
+package labs.cosmic.easyfind.easyfind.utils;
 
 import com.google.common.collect.EvictingQueue;
 import net.minecraft.item.Item;

@@ -1,7 +1,7 @@
-package net.fortytoo.easyfind.easyfind.screens.widgets;
+package labs.cosmic.easyfind.easyfind.screens.widgets;
 
-import net.fortytoo.easyfind.easyfind.screens.Spotlight;
-import net.fortytoo.easyfind.easyfind.utils.SearchResult;
+import labs.cosmic.easyfind.easyfind.screens.Spotlight;
+import labs.cosmic.easyfind.easyfind.utils.SearchResult;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.navigation.NavigationDirection;
