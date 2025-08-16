@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "mod_id",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${description}",
+  "authors": [
+    "${mod_author}"
+  ],
+  "contact": {
+    "repo": "https://github.com/sorae42/easyfind",
+    "issues": "https://github.com/sorae42/easyfind/issues",
+    "homepage": "https://modrinth.com/mod/easyfind"
+  },
+  "license": "${license}",
+  "icon": "assets/efs/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "labs.cosmic.easyfind.EasyFindClient"
+    ],
+    "main": [
+      "labs.cosmic.easyfind.EasyFindCommon"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=17"
+  }
+}
