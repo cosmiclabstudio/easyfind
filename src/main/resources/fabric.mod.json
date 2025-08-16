@@ -17,7 +17,7 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "labs.cosmic.easyfind.easyfind.client.EasyFindClient"
+      "labs.cosmic.easyfind.easyfind.EasyFindClient"
     ],
     "main": [
       "labs.cosmic.easyfind.easyfind.EasyFind"

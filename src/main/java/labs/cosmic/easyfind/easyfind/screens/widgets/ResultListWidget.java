@@ -1,6 +1,5 @@
 package labs.cosmic.easyfind.easyfind.screens.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import labs.cosmic.easyfind.easyfind.screens.Spotlight;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
