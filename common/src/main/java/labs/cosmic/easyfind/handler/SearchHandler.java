@@ -13,7 +13,6 @@ public class SearchHandler {
             return List.of();
         }
 
-        // Split query by | for multiple searches
         String[] subQueries = query.split("\\|");
         java.util.Map<Item, Integer> itemToScore = new java.util.HashMap<>();
         for (String subQuery : subQueries) {
@@ -25,7 +24,7 @@ public class SearchHandler {
                 itemToScore.merge(item, score, Math::max);
             }
         }
-        // Sort items by score descending
+
         return itemToScore.entrySet().stream()
             .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
             .map(java.util.Map.Entry::getKey)
@@ -52,8 +51,8 @@ public class SearchHandler {
         String filteredQuery = String.join(" ", searchTerms);
         List<Item> modFilteredItems = RegistryProvider.getItems().stream()
             .filter(item -> modNames.isEmpty() || modNames.stream().anyMatch(mod -> {
-                var optionalKey = item.builtInRegistryHolder().key();
-                return false;
+                var key = item.builtInRegistryHolder().key().location();
+                return key.getNamespace().startsWith(mod);
             }))
             .toList();
         List<Item> tagFilteredItems = modFilteredItems.stream()
