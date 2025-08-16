@@ -3,7 +3,7 @@ package labs.cosmic.easyfind.handler;
 import labs.cosmic.easyfind.utils.RegistryProvider;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import me.xdrop.fuzzywuzzy.model.BoundExtractedResult;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 import java.util.List;
 
@@ -48,16 +48,18 @@ public class SearchHandler {
             }
         }
 
-        // TODO: Move away from getRegistryEntry sometime soon
+        // TODO: Move away from builtInRegistryHolder sometime soon
         String filteredQuery = String.join(" ", searchTerms);
         List<Item> modFilteredItems = RegistryProvider.getItems().stream()
             .filter(item -> modNames.isEmpty() || modNames.stream().anyMatch(mod -> {
-                var optionalKey = item.getRegistryEntry().getKey();
-                return optionalKey.map(itemRegistryKey -> itemRegistryKey.getValue().getNamespace().startsWith(mod)).orElse(false);
+                var optionalKey = item.builtInRegistryHolder().key();
+                return false;
             }))
             .toList();
         List<Item> tagFilteredItems = modFilteredItems.stream()
-            .filter(item -> tagNames.isEmpty() || tagNames.stream().anyMatch(tag -> item.getRegistryEntry().streamTags().anyMatch(tagKey -> tagKey.id().getPath().startsWith(tag))))
+            .filter(item -> tagNames.isEmpty() || tagNames.stream().anyMatch(
+                tag -> item.builtInRegistryHolder().tags().anyMatch(
+                    tagKey -> tagKey.location().getPath().startsWith(tag))))
             .toList();
 
         if (filteredQuery.isBlank() && (!modNames.isEmpty() || !tagNames.isEmpty())) {

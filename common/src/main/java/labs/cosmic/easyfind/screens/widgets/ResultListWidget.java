@@ -4,15 +4,15 @@ import labs.cosmic.easyfind.screens.Spotlight;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractSelectionList;
-import net.minecraft.client.gui.navigation.NavigationDirection;
+import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.navigation.ScreenDirection;
 import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 
-public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
+public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     final private Spotlight spotlight;
     final private int entryWidth;
     final private Minecraft minecraft;
@@ -31,10 +31,10 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
         this.font = minecraft.font;
     }
 
-    public void selectNextEntryInDirection(final NavigationDirection direction) {
+    public void selectNextEntryInDirection(final ScreenDirection direction) {
         // AbstractSelectionList does not have getNeighboringEntry, so use built-in navigation
         int idx = this.children().indexOf(this.getSelected());
-        int nextIdx = direction == NavigationDirection.DOWN ? idx + 1 : idx - 1;
+        int nextIdx = direction == ScreenDirection.DOWN ? idx + 1 : idx - 1;
         if (nextIdx >= 0 && nextIdx < this.children().size()) {
             this.setSelected(this.children().get(nextIdx));
         }
@@ -46,16 +46,16 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
     }
 
     @Override
-    protected int getScrollbarPositionX() {
+    protected int getScrollbarPosition() {
         return this.getRowRight() - 6;
     }
     
     @Override
     public void render(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
-        int x = this.getX();
-        int y = this.getY();
-        int width = this.getWidth();
-        int height = this.getHeight();
+        int x = this.x0;
+        int y = this.y0;
+        int width = this.width;
+        int height = this.height;
         // no history found
         if (spotlight.getSearchboxWidget().getValue().isEmpty() && spotlight.getItemHistory().isEmpty()) return;
         // avoid displaying not found on blank search query
@@ -75,14 +75,14 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
     }
     
     @Override
-    protected void renderEntry(GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
-        super.renderEntry(context, mouseX, mouseY, delta, index, x - 14, y, entryWidth, entryHeight);
+    protected void renderItem(GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
+        super.renderItem(context, mouseX, mouseY, delta, index, x - 14, y, entryWidth, entryHeight);
     }
     
     @Override
-    protected void drawSelectionHighlight(GuiGraphics context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
-        int i = this.left + (this.width - entryWidth) / 2 - 14;
-        int j = this.left + (this.width + entryWidth) / 2 + ((this.getMaxScroll() > 0) ? 8 : 14);
+    protected void renderSelection(GuiGraphics context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
+        int i = this.x0 + (this.width - entryWidth) / 2 - 14;
+        int j = this.x0 + (this.width + entryWidth) / 2 + ((this.getMaxScroll() > 0) ? 8 : 14);
         context.fill(i, y - 2, j, y + entryHeight + 2, borderColor);
         context.fill(i + 1, y - 1, j - 1, y + entryHeight + 1, fillColor);
     }
@@ -94,7 +94,7 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
 
     // mouse click helper
     public int getEntryY(final double mouseY) {
-        return (int) (mouseY - this.getY()) - this.headerHeight + (int) this.getScrollAmount() - 2;
+        return (int) (mouseY - this.y0) - this.headerHeight + (int) this.getScrollAmount() - 2;
     }
 
     public int getEntryHeight() {
@@ -109,10 +109,10 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
     }
 
     public boolean isMouseOver(final double mouseX, final double mouseY) {
-        int x = this.getX();
-        int y = this.getY();
-        int width = this.getWidth();
-        int height = this.getHeight();
+        int x = this.x0;
+        int y = this.y0;
+        int width = this.width;
+        int height = this.height;
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
     }
 
@@ -122,10 +122,8 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
             spotlight.giveItem();
             return true;
         }
-        
-        // TODO: Focus on searchbox when query being entered
-        //       Comparing keyCode to GLFW ascii or something
-        if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+
+        if (keyCode == GLFW.GLFW_KEY_BACKSPACE || isPrintableSymbol(keyCode)) {
             spotlight.setFocused(spotlight.getSearchboxWidget());
         }
         
@@ -139,7 +137,11 @@ public class ResultListWidget extends AbstractSelectionList<ResultWidget> {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
-        // Basic narration implementation
-        output.add(Component.translatable("efs.narration.result_list"));
+        // Not on priority, sorry.
+    }
+
+    private boolean isPrintableSymbol(int keyCode) {
+        return (keyCode >= 33 && keyCode <= 47) || (keyCode >= 58 && keyCode <= 64) ||
+            (keyCode >= 91 && keyCode <= 96) || (keyCode >= 123 && keyCode <= 126);
     }
 }

@@ -8,7 +8,9 @@ import labs.cosmic.easyfind.screens.widgets.ResultWidget;
 import labs.cosmic.easyfind.screens.widgets.SearchboxWidget;
 import labs.cosmic.easyfind.utils.ItemHistory;
 import labs.cosmic.easyfind.utils.SearchResult;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
@@ -48,7 +50,7 @@ public class Spotlight extends Screen {
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
@@ -57,9 +59,7 @@ public class Spotlight extends Screen {
         super.init();
 
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft != null) {
-            player = minecraft.player;
-        }
+        player = minecraft.player;
 
         final int resultBoxWidth = Math.min(super.width / 2, 300);
         final int resultBoxHeight = Math.min(super.height / 2, 300);
@@ -94,7 +94,7 @@ public class Spotlight extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         if (ConfigAgent.darkenBG) this.renderBackground(context);
         super.render(context, mouseX, mouseY, delta);
     }
@@ -103,7 +103,7 @@ public class Spotlight extends Screen {
     public void tick() {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft != null && minecraft.player != null) {
-            if (!minecraft.player.getAbilities().instabuild) this.close();
+            if (!minecraft.player.getAbilities().instabuild) this.onClose();
         }
     }
 
@@ -130,13 +130,12 @@ public class Spotlight extends Screen {
     }
 
     private void addToResult(Item item) {
-        boolean hasFeature = this.player.connection != null; // Feature check removed for now
-        if (!hasFeature && !ConfigAgent.showDisabledItem) return;
+        boolean hasFeature = true; // Feature check removed for now
         resultListWidget.children().add(new ResultWidget(Minecraft.getInstance().font, item, hasFeature));
     }
 
     private void check(final BiConsumer<Minecraft, ResultWidget> entryConsumer) {
-        final ResultWidget entry = this.resultListWidget.getSelectedOrNull();
+        final ResultWidget entry = this.resultListWidget.getSelected();
         if (entry == null) {
             return;
         }
@@ -166,9 +165,9 @@ public class Spotlight extends Screen {
         }
 
         // double click exec
-        final ResultWidget selectedEntry = this.resultListWidget.getSelectedOrNull();
+        final ResultWidget selectedEntry = this.resultListWidget.getSelected();
         if (selectedEntry != null) {
-            final long timeMs = Util.getMeasuringTimeMs();
+            final long timeMs = Util.getMillis();
             if (timeMs - this.lastClickTime <= 420
                     && this.lastClickItemEntry != null
                     && this.lastClickItemEntry.equals(selectedEntry.getItem())) {
@@ -203,12 +202,12 @@ public class Spotlight extends Screen {
     public void giveItem() {
         this.check((client, entry) -> {
             inventoryHandler.giveItem(client, entry.getItem());
-            this.close();
+            this.onClose();
         });
     }
 
     public void updateResults() {
-        this.search(this.searchboxWidget.getText());
+        this.search(this.searchboxWidget.toString());
     }
 
     public ResultListWidget getResultList() {
@@ -224,10 +223,10 @@ public class Spotlight extends Screen {
     }
 
     @Override
-    public void close() {
+    public void onClose() {
         if (ConfigAgent.keepScreenOn == ConfigAgent.KeepScreen.SHIFT) {
             if (this.isShiftDown) return;
         }
-        super.close();
+        super.onClose();
     }
 }

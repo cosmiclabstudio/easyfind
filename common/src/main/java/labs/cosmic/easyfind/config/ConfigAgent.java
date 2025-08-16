@@ -1,22 +1,22 @@
 package labs.cosmic.easyfind.config;
 
-import eu.midnightdust.lib.config.MidnightConfig;
+// Temporary disable config so I can test out first.
 
-public class ConfigAgent extends MidnightConfig {
+public class ConfigAgent {
     public enum ReplaceNeighbor { CURRENT, NEXT, PREVIOUS }
     public enum KeepScreen { SHIFT, ALWAYS }
     
     // Cosmetics
-    @Entry(category = "text") public static boolean darkenBG = true;
-    @Entry(category = "text") public static boolean showDescription = true;
-    @Entry(category = "text") public static boolean coloredRarity = true;
+    public static boolean darkenBG = true;
+    public static boolean showDescription = true;
+    public static boolean coloredRarity = true;
     
     // Behaviour
-    @Entry(category = "text") public static ReplaceNeighbor replaceNeighbor = ReplaceNeighbor.CURRENT;
-    @Entry(category = "text") public static KeepScreen keepScreenOn = KeepScreen.SHIFT;
-    @Entry(category = "text") public static boolean forcedReplace = false;
-    @Entry(category = "text") public static boolean ignoreExisting = false;
+    public static ReplaceNeighbor replaceNeighbor = ReplaceNeighbor.CURRENT;
+    public static KeepScreen keepScreenOn = KeepScreen.SHIFT;
+    public static boolean forcedReplace = false;
+    public static boolean ignoreExisting = false;
     
-    @Entry(category = "text") public static boolean saveHistory = true;
-    @Entry(category = "text") public static boolean showDisabledItem;
+    public static boolean saveHistory = true;
+    public static boolean showDisabledItem;
 }
