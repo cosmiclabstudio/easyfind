@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.navigation.ScreenDirection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.function.BiConsumer;
@@ -24,7 +25,47 @@ public class SearchboxWidget extends EditBox {
         this.placeholder = Component.translatable("efs.placeholder").withStyle(ChatFormatting.GRAY);
         this.setMaxLength(256);
         this.setEditable(true);
-        // Placeholder logic will be handled in render
+        this.setCanLoseFocus(true);
+        this.setTextColor(-1);
+        this.setTextColorUneditable(-1);
+        this.setFormatter((text, cursorPos) -> {
+            MutableComponent result = Component.literal("");
+            int i = 0;
+            while (i < text.length()) {
+                int start = i;
+                int end = i;
+                int color = -1;
+                switch (text.charAt(i)) {
+                    case '@':
+                        color = 0xFF69B4; // pink
+                        end = i + 1;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        break;
+                    case '#':
+                        color = 0x90EE90; // light green
+                        end = i + 1;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        break;
+                    case '|':
+                        color = 0xADD8E6; // light blue
+                        end = i + 1;
+                        break;
+                    default:
+                        end = i;
+                        while (end < text.length() && text.charAt(end) != '@' && text.charAt(end) != '#' && text.charAt(end) != '|') end++;
+                        break;
+                }
+                String token = text.substring(start, end);
+                final int tokenColor = color;
+                if (tokenColor != -1) {
+                    result.append(Component.literal(token).withStyle(style -> style.withColor(tokenColor)));
+                } else {
+                    result.append(Component.literal(token));
+                }
+                i = end;
+            }
+            return result.getVisualOrderText();
+        });
     }
     
     @Override

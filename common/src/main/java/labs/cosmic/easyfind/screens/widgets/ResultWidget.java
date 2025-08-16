@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.Rarity;
-import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.Objects;
@@ -26,7 +25,7 @@ public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
     }
 
     @Override
-    public @NotNull Component getNarration() {
+    public Component getNarration() {
         return Component.translatable(this.item.getDescriptionId());
     }
     
@@ -35,7 +34,7 @@ public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
     }
 
     @Override
-    public void render(@NotNull GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+    public void render(GuiGraphics context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
         final Component text;
         final ItemStack itemStack = new ItemStack(this.item);
         final Rarity rarity = itemStack.getRarity();

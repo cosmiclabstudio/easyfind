@@ -20,7 +20,7 @@
       "labs.cosmic.easyfind.EasyFindClient"
     ],
     "main": [
-      "labs.cosmic.easyfind.EasyFindCommon"
+      "labs.cosmic.easyfind.EasyFind"
     ]
   },
   "depends": {

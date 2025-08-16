@@ -84,13 +84,13 @@ public class Spotlight extends Screen {
         resultListWidget = new ResultListWidget(
                 this,
                 minecraft,
+                resultBoxX,
                 resultBoxWidth,
                 resultBoxHeight,
                 resultBoxY + 1,
                 resultBoxY + resultBoxHeight
         );
         super.addRenderableWidget(resultListWidget);
-        this.updateResults();
     }
 
     @Override
@@ -102,7 +102,8 @@ public class Spotlight extends Screen {
     @Override
     public void tick() {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft != null && minecraft.player != null) {
+        if (minecraft.player != null) {
+            this.updateResults();
             if (!minecraft.player.getAbilities().instabuild) this.onClose();
         }
     }
@@ -140,7 +141,7 @@ public class Spotlight extends Screen {
             return;
         }
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft == null || minecraft.player == null) {
+        if (minecraft.player == null) {
             return;
         }
         entryConsumer.accept(minecraft, entry);
@@ -207,7 +208,7 @@ public class Spotlight extends Screen {
     }
 
     public void updateResults() {
-        this.search(this.searchboxWidget.toString());
+        this.search(this.searchboxWidget.getValue());
     }
 
     public ResultListWidget getResultList() {

@@ -17,11 +17,14 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     final private int entryWidth;
     final private Minecraft minecraft;
     final private Font font;
+    final private int left;
+    final private int top;
 
     public ResultListWidget(Spotlight screen, 
                             Minecraft minecraft,
+                            int left,
                             int width,
-                            int height, 
+                            int height,
                             int top,
                             int bottom) {
         super(minecraft, width, height, top, bottom, 24);
@@ -29,6 +32,8 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
         this.entryWidth = width;
         this.minecraft = minecraft;
         this.font = minecraft.font;
+        this.left = left;
+        this.top = top;
     }
 
     public void selectNextEntryInDirection(final ScreenDirection direction) {
@@ -52,37 +57,39 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     
     @Override
     public void render(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
-        int x = this.x0;
-        int y = this.y0;
+        int left = this.left;
+        int top = this.top;
+        int right = this.left + this.width;
+        int bottom = this.top + this.height;
         int width = this.width;
         int height = this.height;
         // no history found
         if (spotlight.getSearchboxWidget().getValue().isEmpty() && spotlight.getItemHistory().isEmpty()) return;
         // avoid displaying not found on blank search query
         if (spotlight.getSearchboxWidget().getValue().isEmpty() && this.children().isEmpty()) return;
-        context.fill(x, y, x + width, y + height, Color.BLACK.getRGB()); // background
+        context.fill(left, top, right, bottom + 1, Color.BLACK.getRGB()); // background
         // Draw border manually
-        context.fill(x - 1, y - 1, x + width + 1, y, Color.WHITE.getRGB()); // top
-        context.fill(x - 1, y + height, x + width + 1, y + height + 1, Color.WHITE.getRGB()); // bottom
-        context.fill(x - 1, y, x, y + height, Color.WHITE.getRGB()); // left
-        context.fill(x + width, y, x + width + 1, y + height, Color.WHITE.getRGB()); // right
+        context.fill(left - 1, top - 1, right + 1, top, Color.WHITE.getRGB()); // top
+        context.fill(left - 1, bottom, right + 1, bottom + 1, Color.WHITE.getRGB()); // bottom
+        context.fill(left - 1, top, left, bottom, Color.WHITE.getRGB()); // left
+        context.fill(right, top, right + 1, bottom, Color.WHITE.getRGB()); // right
         if (this.children().isEmpty()) {
             final Component text = Component.translatable("efs.404");
             int textWidth = this.font.width(text);
-            context.drawString(this.font, text, x + width / 2 - textWidth / 2, y + height / 2 - 5, Color.PINK.getRGB(), true);
+            context.drawString(this.font, text, left + width / 2 - textWidth / 2, top + height / 2 - 5, Color.PINK.getRGB(), true);
         }
         super.render(context, mouseX, mouseY, delta);
     }
     
     @Override
     protected void renderItem(GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
-        super.renderItem(context, mouseX, mouseY, delta, index, x - 14, y, entryWidth, entryHeight);
+        super.renderItem(context, mouseX, mouseY, delta, index, this.left, y, entryWidth, entryHeight);
     }
     
     @Override
     protected void renderSelection(GuiGraphics context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
-        int i = this.x0 + (this.width - entryWidth) / 2 - 14;
-        int j = this.x0 + (this.width + entryWidth) / 2 + ((this.getMaxScroll() > 0) ? 8 : 14);
+        int i = this.left + (this.width - entryWidth) / 2 - 14;
+        int j = this.left + (this.width + entryWidth) / 2 + ((this.getMaxScroll() > 0) ? 8 : 14);
         context.fill(i, y - 2, j, y + entryHeight + 2, borderColor);
         context.fill(i + 1, y - 1, j - 1, y + entryHeight + 1, fillColor);
     }
@@ -94,7 +101,7 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
 
     // mouse click helper
     public int getEntryY(final double mouseY) {
-        return (int) (mouseY - this.y0) - this.headerHeight + (int) this.getScrollAmount() - 2;
+        return (int) (mouseY - this.top) - this.headerHeight + (int) this.getScrollAmount() - 2;
     }
 
     public int getEntryHeight() {
@@ -109,8 +116,8 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     }
 
     public boolean isMouseOver(final double mouseX, final double mouseY) {
-        int x = this.x0;
-        int y = this.y0;
+        int x = this.left;
+        int y = this.top;
         int width = this.width;
         int height = this.height;
         return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
