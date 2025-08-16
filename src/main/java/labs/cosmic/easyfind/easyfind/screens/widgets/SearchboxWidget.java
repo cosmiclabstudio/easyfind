@@ -6,6 +6,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.navigation.NavigationDirection;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
@@ -23,7 +24,49 @@ public class SearchboxWidget extends TextFieldWidget {
         this.spotlight = screen;
         this.textRenderer = textRenderer;
         this.placeholder = Text.translatable("efs.placeholder").formatted(Formatting.GRAY);
+        this.setMaxLength(256);
+        this.setFocusUnlocked(true);
+        this.setEditableColor(-1);
+        this.setUneditableColor(-1);
         this.setPlaceholder(this.placeholder);
+        this.setRenderTextProvider((text, cursorPos) -> {
+            MutableText result = Text.literal("");
+            int i = 0;
+            while (i < text.length()) {
+                int start = i;
+                int end = i;
+                int color = -1;
+                switch (text.charAt(i)) {
+                    case '@':
+                        color = 0xFF69B4; // pink
+                        end = i + 1;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        break;
+                    case '#':
+                        color = 0x90EE90; // light green
+                        end = i + 1;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        break;
+                    case '|':
+                        color = 0xADD8E6; // light blue
+                        end = i + 1;
+                        break;
+                    default:
+                        end = i;
+                        while (end < text.length() && text.charAt(end) != '@' && text.charAt(end) != '#' && text.charAt(end) != '|') end++;
+                        break;
+                }
+                String token = text.substring(start, end);
+                final int tokenColor = color;
+                if (tokenColor != -1) {
+                    result.append(Text.literal(token).styled(style -> style.withColor(tokenColor)));
+                } else {
+                    result.append(Text.literal(token));
+                }
+                i = end;
+            }
+            return result.asOrderedText();
+        });
     }
     
     @Override

@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import labs.cosmic.easyfind.easyfind.config.ConfigAgent;
 import labs.cosmic.easyfind.easyfind.handler.InventoryHandler;
-import labs.cosmic.easyfind.easyfind.handler.SearchManager;
+import labs.cosmic.easyfind.easyfind.handler.SearchHandler;
 import labs.cosmic.easyfind.easyfind.screens.widgets.ResultListWidget;
 import labs.cosmic.easyfind.easyfind.screens.widgets.ResultWidget;
 import labs.cosmic.easyfind.easyfind.screens.widgets.SearchboxWidget;
@@ -29,7 +29,7 @@ public class Spotlight extends Screen {
     private ResultListWidget resultListWidget;
 
     private final ItemHistory itemHistory;
-    private final SearchManager searchManager;
+    private final SearchHandler searchManager;
     private final InventoryHandler inventoryHandler;
 
     private String prevQuery;
@@ -47,7 +47,7 @@ public class Spotlight extends Screen {
     public Spotlight(ItemHistory itemHistory) {
         super(Text.translatable("efs.title"));
         this.itemHistory = itemHistory;
-        this.searchManager = new SearchManager();
+        this.searchManager = new SearchHandler();
         this.inventoryHandler = new InventoryHandler(itemHistory);
     }
 
