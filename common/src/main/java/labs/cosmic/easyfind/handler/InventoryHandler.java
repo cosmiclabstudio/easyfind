@@ -45,7 +45,7 @@ public class InventoryHandler {
             }
         }
         if (ConfigAgent.forcedReplace) slot = inventory.selected;
-        else if (emptySlot == -1 || emptySlot > 8) {
+        else if (emptySlot == -1) {
             slot = inventory.selected;
             slot = switch (ConfigAgent.replaceNeighbor) {
                 case CURRENT -> slot;

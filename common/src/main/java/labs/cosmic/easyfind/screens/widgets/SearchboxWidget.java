@@ -5,6 +5,7 @@ import labs.cosmic.easyfind.utils.SearchResult;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.navigation.ScreenDirection;
 import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
@@ -30,7 +31,7 @@ public class SearchboxWidget extends EditBox {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         // Move selection down on key down
         if (keyCode == GLFW.GLFW_KEY_DOWN) {
-            this.spotlight.getResultList().selectNextEntryInDirection(NavigationDirection.DOWN);
+            this.spotlight.getResultList().selectNextEntryInDirection(ScreenDirection.DOWN);
         }
         final SearchResult result = SearchResult.fromKeyCode(keyCode);
         if (result != null) {
