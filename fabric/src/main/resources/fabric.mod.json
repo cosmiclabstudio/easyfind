@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "easyfind",
-  "version": "${version}",
-  "name": "${mod_name}",
-  "description": "${description}",
+  "id": "${modId}",
+  "version": "${modVersion}",
+  "name": "${modName}",
+  "description": "${modDescription}",
   "authors": [
-    "${mod_author}"
+    "${modAuthor}"
   ],
   "contact": {
-    "repo": "https://github.com/sorae42/easyfind",
-    "issues": "https://github.com/sorae42/easyfind/issues",
-    "homepage": "https://modrinth.com/mod/easyfind"
+    "homepage": "${modGitHub}",
+    "sources": "${modGitHub}",
+    "issues": "${modGitHub}/issues"
   },
-  "license": "${license}",
+  "license": "${modLicense}",
   "icon": "assets/efs/icon.png",
   "environment": "client",
   "entrypoints": {
@@ -24,9 +24,8 @@
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}",
-    "java": ">=17"
+    "minecraft": ">=${minMinecraftVersion}",
+    "fabricloader": "*",
+    "fabric": "*"
   }
 }

@@ -1,22 +1,24 @@
 plugins {
     id("multiloader-common")
-    id("fabric-loom") version "1.9-SNAPSHOT"
+    id("fabric-loom") version "1.11-SNAPSHOT"
     kotlin("jvm") version "2.2.0"
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
     id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.14"
 }
 
-loom {
-    accessWidenerPath = common.project.file("../../src/main/resources/${mod.id}.accesswidener")
+stonecutter {
 
-    mixin {
-        useLegacyMixinAp = false
-    }
 }
 
 fletchingTable {
     j52j.register("main") {
         extension("json", "**/*.json5")
+    }
+}
+
+loom {
+    mixin {
+        useLegacyMixinAp = false
     }
 }
 
@@ -30,8 +32,8 @@ dependencies {
     })
 
     compileOnly("org.spongepowered:mixin:0.8.5")
+    modCompileOnly("net.fabricmc:fabric-loader:${commonMod.dep("fabric_loader")}")
     implementation("me.xdrop:fuzzywuzzy:1.4.0")
-    modCompileOnly("net.fabricmc:fabric-loader:${commonMod.dep("fabric-loader")}")
 }
 
 val commonJava: Configuration by configurations.creating {

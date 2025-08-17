@@ -80,9 +80,6 @@ public class Spotlight extends Screen {
         );
 
         this.resultListWidget.setLeftPos(resultBoxX);
-        this.searchboxWidget.setFocused(true);
-        this.searchboxWidget.setEditable(true);
-        this.searchboxWidget.setVisible(true);
 
         super.addRenderableWidget(this.searchboxWidget);
         super.addRenderableWidget(this.resultListWidget);
