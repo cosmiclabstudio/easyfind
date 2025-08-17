@@ -43,7 +43,7 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
             this.setSelected(this.children().get(nextIdx));
         }
     }
-    
+
     @Override
     public int getRowWidth() {
         return this.entryWidth;
@@ -53,7 +53,7 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     protected int getScrollbarPosition() {
         return this.getRowRight() - 8;
     }
-    
+
     @Override
     public void render(final GuiGraphics context, final int mouseX, final int mouseY, final float delta) {
         int left = this.left;
@@ -79,12 +79,12 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
         }
         super.render(context, mouseX, mouseY, delta);
     }
-    
+
     @Override
     protected void renderItem(GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
         super.renderItem(context, mouseX, mouseY, delta, index, this.left + 4, y, entryWidth, entryHeight);
     }
-    
+
     @Override
     protected void renderSelection(GuiGraphics context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
         int i = this.left + (this.width - entryWidth) / 2 + 2;
@@ -92,7 +92,7 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
         context.fill(i, y - 2, j, y + entryHeight + 2, borderColor);
         context.fill(i + 1, y - 1, j - 1, y + entryHeight + 1, fillColor);
     }
-    
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         return super.mouseClicked(mouseX, mouseY, button);
@@ -132,10 +132,10 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
         if (keyCode == GLFW.GLFW_KEY_BACKSPACE || isPrintableSymbol(keyCode)) {
             spotlight.setFocused(spotlight.getSearchboxWidget());
         }
-        
+
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
-    
+
     @Override
     public void setFocused(boolean focused) {
         super.setFocused(false);

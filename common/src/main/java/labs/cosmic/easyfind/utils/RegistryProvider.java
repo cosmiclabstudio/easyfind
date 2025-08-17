@@ -14,7 +14,7 @@ public class RegistryProvider {
     private static final List<Item> BLACKLISTED_ITEMS = List.of(
         Items.AIR
     );
-    
+
     static {
         List<Item> items = new ArrayList<>();
         for (Item item : BuiltInRegistries.ITEM) {

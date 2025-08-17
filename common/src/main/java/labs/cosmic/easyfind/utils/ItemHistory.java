@@ -15,16 +15,16 @@ public class ItemHistory {
         this.internalStack = EvictingQueue.create(maxSize);
         this.maxSize = maxSize;
     }
-    
+
     public void push(Item element) {
         internalStack.remove(element);
-        
+
         if (internalStack.size() >= maxSize) {
             internalStack.remove();
         }
         internalStack.add(element);
     }
-    
+
     public Queue<Item> getItemHistory() {
         Stack<Item> stack = new Stack<>();
         Queue<Item> reversedQueue = new LinkedList<>(internalStack);
