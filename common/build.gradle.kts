@@ -33,6 +33,7 @@ dependencies {
 
     compileOnly("org.spongepowered:mixin:0.8.5")
     modCompileOnly("net.fabricmc:fabric-loader:${commonMod.dep("fabric_loader")}")
+    modCompileOnly("dev.isxander:yet-another-config-lib:${commonMod.dep("yacl")}-fabric")
     implementation("me.xdrop:fuzzywuzzy:1.4.0")
 }
 
