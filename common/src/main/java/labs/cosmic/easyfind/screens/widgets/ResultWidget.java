@@ -1,16 +1,15 @@
 package labs.cosmic.easyfind.screens.widgets;
 
 import labs.cosmic.easyfind.config.ConfigAgent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.item.Rarity;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
@@ -28,7 +27,7 @@ public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
     public Component getNarration() {
         return Component.translatable(this.item.getDescriptionId());
     }
-    
+
     public Item getItem() {
         return this.item;
     }

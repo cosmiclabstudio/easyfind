@@ -7,7 +7,6 @@ import labs.cosmic.easyfind.screens.widgets.ResultListWidget;
 import labs.cosmic.easyfind.screens.widgets.ResultWidget;
 import labs.cosmic.easyfind.screens.widgets.SearchboxWidget;
 import labs.cosmic.easyfind.utils.ItemHistory;
-import labs.cosmic.easyfind.utils.SearchResult;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -18,29 +17,22 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Objects;
 import java.util.Queue;
 import java.util.function.BiConsumer;
 
 public class Spotlight extends Screen {
-    private SearchboxWidget searchboxWidget;
-    private ResultListWidget resultListWidget;
-
+    private static int slot;
+    final int inputHeight = 16;
     private final ItemHistory itemHistory;
     private final SearchHandler searchManager;
     private final InventoryHandler inventoryHandler;
-
+    LocalPlayer player;
+    private SearchboxWidget searchboxWidget;
+    private ResultListWidget resultListWidget;
     private String prevQuery;
     private Item lastClickItemEntry;
-
-    private static int slot;
     private boolean isShiftDown = false;
-
     private long lastClickTime;
-
-    final int inputHeight = 16;
-
-    LocalPlayer player;
 
     public Spotlight(ItemHistory itemHistory) {
         super(Component.nullToEmpty(I18n.get("efs.title")));
@@ -69,22 +61,22 @@ public class Spotlight extends Screen {
         final int resultBoxY = (super.height / 6) + inputHeight + 6;
 
         this.searchboxWidget = new SearchboxWidget(
-                this,
-                minecraft.font,
-                searchFieldX,
-                searchFieldY,
-                resultBoxWidth,
-                inputHeight
+            this,
+            minecraft.font,
+            searchFieldX,
+            searchFieldY,
+            resultBoxWidth,
+            inputHeight
         );
 
         this.resultListWidget = new ResultListWidget(
-                this,
-                minecraft,
-                resultBoxX,
-                resultBoxWidth,
-                resultBoxHeight,
-                resultBoxY + 1,
-                resultBoxY + resultBoxHeight
+            this,
+            minecraft,
+            resultBoxX,
+            resultBoxWidth,
+            resultBoxHeight,
+            resultBoxY + 1,
+            resultBoxY + resultBoxHeight
         );
 
         this.resultListWidget.setLeftPos(resultBoxX);
@@ -173,8 +165,8 @@ public class Spotlight extends Screen {
         if (selectedEntry != null) {
             final long timeMs = Util.getMillis();
             if (timeMs - this.lastClickTime <= 420
-                    && this.lastClickItemEntry != null
-                    && this.lastClickItemEntry.equals(selectedEntry.getItem())) {
+                && this.lastClickItemEntry != null
+                && this.lastClickItemEntry.equals(selectedEntry.getItem())) {
                 if (button == 0) {
                     this.giveItem();
                 }
@@ -196,7 +188,7 @@ public class Spotlight extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (this.resultListWidget.isMouseOver(mouseX, mouseY)
-                && this.entryClickHandler(mouseY, button)) {
+            && this.entryClickHandler(mouseY, button)) {
             return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);

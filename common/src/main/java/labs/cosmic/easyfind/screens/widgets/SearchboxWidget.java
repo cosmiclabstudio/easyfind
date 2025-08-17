@@ -17,7 +17,7 @@ public class SearchboxWidget extends EditBox {
     private final Font font;
     private final Component placeholder;
     private BiConsumer<SearchResult, ResultWidget> resultConsumer = null;
-    
+
     public SearchboxWidget(Spotlight screen, Font font, int x, int y, int width, int height) {
         super(font, x, y, width, height, Component.translatable("efs.title"));
         this.spotlight = screen;
@@ -40,12 +40,14 @@ public class SearchboxWidget extends EditBox {
                     case '@':
                         color = 0xFF69B4; // pink
                         end = i + 1;
-                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#')
+                            end++;
                         break;
                     case '#':
                         color = 0x90EE90; // light green
                         end = i + 1;
-                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#') end++;
+                        while (end < text.length() && !Character.isWhitespace(text.charAt(end)) && text.charAt(end) != '@' && text.charAt(end) != '#')
+                            end++;
                         break;
                     case '|':
                         color = 0xADD8E6; // light blue
@@ -53,7 +55,8 @@ public class SearchboxWidget extends EditBox {
                         break;
                     default:
                         end = i;
-                        while (end < text.length() && text.charAt(end) != '@' && text.charAt(end) != '#' && text.charAt(end) != '|') end++;
+                        while (end < text.length() && text.charAt(end) != '@' && text.charAt(end) != '#' && text.charAt(end) != '|')
+                            end++;
                         break;
                 }
                 String token = text.substring(start, end);
@@ -68,7 +71,7 @@ public class SearchboxWidget extends EditBox {
             return result.getVisualOrderText();
         });
     }
-    
+
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         // Move selection down on key down
