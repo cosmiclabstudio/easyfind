@@ -15,29 +15,28 @@ import java.awt.*;
 public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     final private Spotlight spotlight;
     final private int entryWidth;
-    final private Minecraft minecraft;
     final private Font font;
     final private int left;
     final private int top;
 
-    public ResultListWidget(Spotlight screen, 
-                            Minecraft minecraft,
+    public ResultListWidget(Spotlight screen,
+                            Minecraft client,
                             int left,
                             int width,
                             int height,
                             int top,
                             int bottom) {
-        super(minecraft, width, height, top, bottom, 24);
+        super(client, width, height, top, bottom, 24);
         this.spotlight = screen;
         this.entryWidth = width;
-        this.minecraft = minecraft;
-        this.font = minecraft.font;
         this.left = left;
         this.top = top;
+        this.font = client.font;
+        this.setRenderBackground(false);
+        this.setRenderTopAndBottom(false);
     }
 
     public void selectNextEntryInDirection(final ScreenDirection direction) {
-        // AbstractSelectionList does not have getNeighboringEntry, so use built-in navigation
         int idx = this.children().indexOf(this.getSelected());
         int nextIdx = direction == ScreenDirection.DOWN ? idx + 1 : idx - 1;
         if (nextIdx >= 0 && nextIdx < this.children().size()) {
@@ -47,12 +46,12 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     
     @Override
     public int getRowWidth() {
-        return this.entryWidth - 34;
+        return this.entryWidth;
     }
 
     @Override
     protected int getScrollbarPosition() {
-        return this.getRowRight() - 6;
+        return this.getRowRight() - 8;
     }
     
     @Override
@@ -76,20 +75,20 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
         if (this.children().isEmpty()) {
             final Component text = Component.translatable("efs.404");
             int textWidth = this.font.width(text);
-            context.drawString(this.font, text, left + width / 2 - textWidth / 2, top + height / 2 - 5, Color.PINK.getRGB(), true);
+            context.drawString(this.font, text, left + (width / 2) - (textWidth / 2), top + (height / 2) - 5, Color.PINK.getRGB(), true);
         }
         super.render(context, mouseX, mouseY, delta);
     }
     
     @Override
     protected void renderItem(GuiGraphics context, int mouseX, int mouseY, float delta, int index, int x, int y, int entryWidth, int entryHeight) {
-        super.renderItem(context, mouseX, mouseY, delta, index, this.left, y, entryWidth, entryHeight);
+        super.renderItem(context, mouseX, mouseY, delta, index, this.left + 4, y, entryWidth, entryHeight);
     }
     
     @Override
     protected void renderSelection(GuiGraphics context, int y, int entryWidth, int entryHeight, int borderColor, int fillColor) {
-        int i = this.left + (this.width - entryWidth) / 2 - 14;
-        int j = this.left + (this.width + entryWidth) / 2 + ((this.getMaxScroll() > 0) ? 8 : 14);
+        int i = this.left + (this.width - entryWidth) / 2 + 2;
+        int j = this.left + (this.width + entryWidth) / 2 - ((this.getMaxScroll() > 0) ? 8 : 2);
         context.fill(i, y - 2, j, y + entryHeight + 2, borderColor);
         context.fill(i + 1, y - 1, j - 1, y + entryHeight + 1, fillColor);
     }

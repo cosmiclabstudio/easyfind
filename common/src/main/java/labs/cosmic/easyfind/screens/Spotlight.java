@@ -77,11 +77,7 @@ public class Spotlight extends Screen {
                 inputHeight
         );
 
-        // Remove setChangedListener, setFocused, addDrawableChild
-        // Use addRenderableWidget for 1.20.1
-        super.addRenderableWidget(this.searchboxWidget);
-
-        resultListWidget = new ResultListWidget(
+        this.resultListWidget = new ResultListWidget(
                 this,
                 minecraft,
                 resultBoxX,
@@ -90,7 +86,14 @@ public class Spotlight extends Screen {
                 resultBoxY + 1,
                 resultBoxY + resultBoxHeight
         );
-        super.addRenderableWidget(resultListWidget);
+
+        this.resultListWidget.setLeftPos(resultBoxX);
+        this.searchboxWidget.setFocused(true);
+        this.searchboxWidget.setEditable(true);
+        this.searchboxWidget.setVisible(true);
+
+        super.addRenderableWidget(this.searchboxWidget);
+        super.addRenderableWidget(this.resultListWidget);
     }
 
     @Override
@@ -136,12 +139,12 @@ public class Spotlight extends Screen {
     }
 
     private void check(final BiConsumer<Minecraft, ResultWidget> entryConsumer) {
-        final ResultWidget entry = this.resultListWidget.getSelected();
-        if (entry == null) {
-            return;
-        }
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) {
+            return;
+        }
+        final ResultWidget entry = this.resultListWidget.getSelected();
+        if (entry == null) {
             return;
         }
         entryConsumer.accept(minecraft, entry);

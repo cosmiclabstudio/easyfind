@@ -8,6 +8,6 @@ public class EasyFindCommon {
     public static Spotlight spotlight = new Spotlight(itemHistory);
 
     public static void init() {
-
+        spotlight.setFocused(true);
     }
 }
