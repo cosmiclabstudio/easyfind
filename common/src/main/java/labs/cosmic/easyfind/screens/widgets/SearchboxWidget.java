@@ -25,6 +25,7 @@ public class SearchboxWidget extends EditBox {
         this.placeholder = Component.translatable("efs.placeholder").withStyle(ChatFormatting.GRAY);
         this.setMaxLength(256);
         this.setEditable(true);
+        this.setFocused(true);
         this.setCanLoseFocus(true);
         this.setTextColor(-1);
         this.setTextColorUneditable(-1);
@@ -77,7 +78,7 @@ public class SearchboxWidget extends EditBox {
         final SearchResult result = SearchResult.fromKeyCode(keyCode);
         if (result != null) {
             final ResultWidget resultWidgetEntry = this.spotlight.getResultList().getSelected();
-            if (resultWidgetEntry != null) {
+            if (resultWidgetEntry != null && this.resultConsumer != null) {
                 this.resultConsumer.accept(result, resultWidgetEntry);
             }
             return true;
@@ -97,9 +98,5 @@ public class SearchboxWidget extends EditBox {
                 0xE0E0E0
             );
         }
-    }
-
-    public void setResultConsumer(BiConsumer<SearchResult, ResultWidget> resultConsumer) {
-        this.resultConsumer = resultConsumer;
     }
 }
