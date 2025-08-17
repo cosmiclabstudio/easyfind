@@ -1,6 +1,6 @@
 plugins {
-    id("fabric-loom") version "1.9-SNAPSHOT"
     `multiloader-loader`
+    id("fabric-loom") version "1.11-SNAPSHOT"
     kotlin("jvm") version "2.2.0"
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
     id("dev.kikugie.fletching-table.fabric") version "0.1.0-alpha.14"
@@ -8,12 +8,6 @@ plugins {
 
 stonecutter {
 
-}
-
-fletchingTable {
-    j52j.register("main") {
-        extension("json", "**/*.json5")
-    }
 }
 
 dependencies {
@@ -25,19 +19,15 @@ dependencies {
         }
     })
 
-    implementation("me.xdrop:fuzzywuzzy:1.4.0")
+    modImplementation("net.fabricmc:fabric-loader:${commonMod.dep("fabric_loader")}")
+    modApi("net.fabricmc.fabric-api:fabric-api:${commonMod.dep("fabric_api")}+${commonMod.mc}")
 
-    modImplementation("net.fabricmc:fabric-loader:${commonMod.dep("fabric-loader")}")
-    modApi("net.fabricmc.fabric-api:fabric-api:${commonMod.dep("fabric-api")}+${commonMod.mc}")
-
-    // Optional dependencies
+    // Required dependencies
     modImplementation("com.terraformersmc:modmenu:${commonMod.dep("modmenu")}")
+    implementation("me.xdrop:fuzzywuzzy:1.4.0")
 }
 
 loom {
-    accessWidenerPath = common.project.file("../../src/main/resources/${mod.id}.accesswidener")
-    //accessWidenerPath = project(":common:${stonecutter.current.project}").loom.accessWidenerPath
-
     runs {
         getByName("client") {
             client()

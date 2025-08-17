@@ -12,8 +12,6 @@ pluginManagement {
         maven("https://maven.minecraftforge.net")
         maven("https://maven.kikugie.dev/snapshots")
         maven("https://maven.kikugie.dev/releases")
-        maven("https://maven.parchmentmc.org")
-        maven("https://maven.terraformersmc.com/")
     }
 }
 

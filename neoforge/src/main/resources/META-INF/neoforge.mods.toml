@@ -14,15 +14,15 @@ logoBlur = false
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/easyfind"
 
 [[dependencies.${ modId }]]
-modId = "forge"
-mandatory = true
+modId = "neoforge"
+type = "required"
 versionRange = "*"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ modId }]]
 modId = "minecraft"
-mandatory = true
+type = "required"
 versionRange = "[${minMinecraftVersion},)"
 ordering = "NONE"
 side = "BOTH"

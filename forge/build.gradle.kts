@@ -1,52 +1,59 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.text.SimpleDateFormat
-import java.util.Date
-
 plugins {
     `multiloader-loader`
-    java
+    id("net.neoforged.moddev.legacyforge") version "2.0.107"
     kotlin("jvm") version "2.2.0"
-    id("net.minecraftforge.gradle") version "6.0.43"
     id("com.google.devtools.ksp") version "2.2.0-2.0.2"
-}
-apply(from = "https://raw.githubusercontent.com/thedarkcolour/KotlinForForge/site/thedarkcolour/kotlinforforge/gradle/kff-3.5.0.gradle")
-
-repositories {
-    maven("https://libraries.minecraft.net")
-    mavenCentral()
+    id("dev.kikugie.fletching-table") version "0.1.0-alpha.13"
 }
 
-dependencies {
-    "minecraft"("net.minecraftforge:forge:${commonMod.dep("forge")}")
-    implementation("me.xdrop:fuzzywuzzy:1.4.0")
-    commonMod.depOrNull("parchment")?.let { parchmentVersion ->
-        implementation("org.parchmentmc.data:parchment-${commonMod.mc}:$parchmentVersion@zip")
+mixin {
+    add(sourceSets.main.get(), "${mod.id}.refmap.json")
+}
+
+legacyForge {
+    enable {
+        forgeVersion = "${mod.mc}-${commonMod.dep("forge")}"
     }
 }
 
-val Project.minecraft: net.minecraftforge.gradle.common.util.MinecraftExtension
-    get() = extensions.getByType()
+dependencies {
+    compileOnly("org.jetbrains:annotations:24.1.0")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    implementation("me.xdrop:fuzzywuzzy:1.4.0")
+}
 
-minecraft.let {
-    it.mappings("official", commonMod.mc)
-    it.runs {
-        create("client") {
-            workingDirectory(project.file("run"))
-            property("forge.logging.console.level", "debug")
-            mods {
-                this.create("easyfind") {
-                    source(sourceSets.main.get())
-                }
-            }
+legacyForge {
+    runs {
+        register("client") {
+            client()
+            ideName = "Forge Client (${project.path})"
         }
-        create("server") {
-            workingDirectory(project.file("run"))
-            property("forge.logging.console.level", "debug")
-            mods {
-                this.create("easyfind") {
-                    source(sourceSets.main.get())
-                }
-            }
+        register("server") {
+            server()
+            ideName = "Forge Server (${project.path})"
         }
+    }
+
+    parchment {
+        commonMod.depOrNull("parchment")?.let {
+            mappingsVersion = it
+            minecraftVersion = commonMod.mc
+        }
+    }
+
+    mods {
+        register(commonMod.id) {
+            sourceSet(sourceSets.main.get())
+        }
+    }
+}
+
+sourceSets.main {
+    resources.srcDir("src/generated/resources")
+}
+
+tasks {
+    jar {
+        finalizedBy("reobfJar")
     }
 }

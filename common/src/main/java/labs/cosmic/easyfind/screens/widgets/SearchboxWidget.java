@@ -25,7 +25,6 @@ public class SearchboxWidget extends EditBox {
         this.placeholder = Component.translatable("efs.placeholder").withStyle(ChatFormatting.GRAY);
         this.setMaxLength(256);
         this.setEditable(true);
-        this.setFocused(true);
         this.setCanLoseFocus(true);
         this.setTextColor(-1);
         this.setTextColorUneditable(-1);
