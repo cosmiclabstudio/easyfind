@@ -19,7 +19,8 @@ legacyForge {
 dependencies {
     compileOnly("org.jetbrains:annotations:24.1.0")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    implementation("me.xdrop:fuzzywuzzy:1.4.0")
+    modImplementation("dev.isxander:yet-another-config-lib:${commonMod.dep("yacl")}-forge")
+    compileOnly("me.xdrop:fuzzywuzzy:1.4.0")
 }
 
 legacyForge {

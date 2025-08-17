@@ -42,6 +42,9 @@ repositories {
     maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
     maven("https://maven.kikugie.dev/releases") { name = "KikuGie Releases" }
     maven("https://maven.kikugie.dev/snapshots") { name = "KikuGie Snapshots" }
+    maven("https://maven.isxander.dev/releases")
+    maven("https://maven.isxander.dev/snapshots")
+    maven("https://thedarkcolour.github.io/KotlinForForge/")
 }
 
 tasks {
@@ -63,6 +66,8 @@ tasks {
             "fabricApiVersion" to commonMod.depOrNull("fabric-api"),
             "neoForgeVersion" to commonMod.depOrNull("neoforge"),
             "forgeVersion" to commonMod.depOrNull("forge"),
+            "yaclVersion" to commonMod.depOrNull("yacl"),
+            "modMenuVersion" to commonMod.depOrNull("modmenu")
         ).filterValues { it?.isNotEmpty() == true }.mapValues { (_, v) -> v!! }
 
         val jsonExpandProps = expandProps.mapValues { (_, v) -> v.replace("\n", "\\\\n") }

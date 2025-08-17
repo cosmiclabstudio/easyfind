@@ -1,6 +1,8 @@
 package labs.cosmic.easyfind;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import labs.cosmic.easyfind.screens.Spotlight;
+import labs.cosmic.easyfind.utils.ItemHistory;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -8,6 +10,7 @@ import net.minecraft.client.KeyMapping;
 import org.lwjgl.glfw.GLFW;
 
 public class EasyFindClient implements ClientModInitializer {
+    private final ItemHistory itemHistory = new ItemHistory(10);
     private static KeyMapping openEFS;
 
     @Override
@@ -22,7 +25,7 @@ public class EasyFindClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openEFS.isDown()) {
                 if (client.player != null && client.player.isCreative()) {
-                    client.setScreen(EasyFindCommon.spotlight);
+                    client.setScreen(new Spotlight(itemHistory));
                 }
             }
         });

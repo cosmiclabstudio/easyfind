@@ -12,6 +12,7 @@ description = "${modDescription}"
 logoFile = "assets/efs/icon.png"
 logoBlur = false
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/easyfind"
+displayTest = "IGNORE_ALL_VERSION"
 
 [[dependencies.${ modId }]]
 modId = "forge"
@@ -24,5 +25,12 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minMinecraftVersion},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${ modId }]]
+modId = "yet_another_config_lib_v3"
+mandatory = true
+versionRange = "[${yaclVersion},)"
 ordering = "NONE"
 side = "BOTH"
