@@ -125,7 +125,8 @@ public class ResultListWidget extends ObjectSelectionList<ResultWidget> {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (keyCode == GLFW.GLFW_KEY_ENTER) {
-            spotlight.giveItem();
+            assert this.getSelected() != null;
+            spotlight.giveItem(this.getSelected().getItem());
             return true;
         }
 

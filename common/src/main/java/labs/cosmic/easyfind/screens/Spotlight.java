@@ -18,15 +18,11 @@ import net.minecraft.world.item.Item;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.Queue;
-import java.util.function.BiConsumer;
 
 public class Spotlight extends Screen {
-    private static int slot;
     final int inputHeight = 16;
     private final ItemHistory itemHistory;
     private final SearchHandler searchManager;
-    private final InventoryHandler inventoryHandler;
-    LocalPlayer player;
     private SearchboxWidget searchboxWidget;
     private ResultListWidget resultListWidget;
     private String prevQuery;
@@ -38,7 +34,6 @@ public class Spotlight extends Screen {
         super(Component.nullToEmpty(I18n.get("efs.title")));
         this.itemHistory = itemHistory;
         this.searchManager = new SearchHandler();
-        this.inventoryHandler = new InventoryHandler(itemHistory);
     }
 
     @Override
@@ -51,7 +46,6 @@ public class Spotlight extends Screen {
         super.init();
 
         Minecraft minecraft = Minecraft.getInstance();
-        player = minecraft.player;
 
         final int resultBoxWidth = Math.min(super.width / 2, 300);
         final int resultBoxHeight = Math.min(super.height / 2, 300);
@@ -81,8 +75,10 @@ public class Spotlight extends Screen {
 
         this.resultListWidget.setLeftPos(resultBoxX);
 
-        super.addRenderableWidget(this.searchboxWidget);
+        super.addRenderableWidget(this.searchboxWidget).setFocused(true);
         super.addRenderableWidget(this.resultListWidget);
+
+        this.setInitialFocus(this.searchboxWidget);
     }
 
     @Override
@@ -127,18 +123,6 @@ public class Spotlight extends Screen {
         resultListWidget.children().add(new ResultWidget(Minecraft.getInstance().font, item, hasFeature));
     }
 
-    private void check(final BiConsumer<Minecraft, ResultWidget> entryConsumer) {
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null) {
-            return;
-        }
-        final ResultWidget entry = this.resultListWidget.getSelected();
-        if (entry == null) {
-            return;
-        }
-        entryConsumer.accept(minecraft, entry);
-    }
-
     private void selectEntry(final ResultWidget entry) {
         this.resultListWidget.setSelected(entry);
         if (!entry.getItem().equals(this.lastClickItemEntry)) {
@@ -165,7 +149,7 @@ public class Spotlight extends Screen {
                 && this.lastClickItemEntry != null
                 && this.lastClickItemEntry.equals(selectedEntry.getItem())) {
                 if (button == 0) {
-                    this.giveItem();
+                    this.giveItem(selectedEntry.getItem());
                 }
                 return true;
             }
@@ -192,11 +176,10 @@ public class Spotlight extends Screen {
     }
 
     // TODO: Configurable, also refactor this.
-    public void giveItem() {
-        this.check((client, entry) -> {
-            inventoryHandler.giveItem(client, entry.getItem());
-            this.onClose();
-        });
+    public void giveItem(Item item) {
+        InventoryHandler.giveItem(item);
+        if (ConfigAgent.saveHistory) addToHistory(item);
+        this.onClose();
     }
 
     public void updateResults() {
@@ -213,6 +196,10 @@ public class Spotlight extends Screen {
 
     public Queue<Item> getItemHistory() {
         return itemHistory.getItemHistory();
+    }
+
+    public void addToHistory(Item item) {
+        this.itemHistory.push(item);
     }
 
     @Override

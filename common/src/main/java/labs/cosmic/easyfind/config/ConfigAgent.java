@@ -6,14 +6,12 @@ import com.google.gson.GsonBuilder;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 
 public class ConfigAgent {
     public static ConfigClassHandler<ConfigAgent> HANDLER = ConfigClassHandler.createBuilder(ConfigAgent.class)
         .id(new ResourceLocation("easyfind", "settings"))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
-            .setPath(FabricLoader.getInstance().getConfigDir().resolve("easyfinder.json5"))
             .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
             .setJson5(true)
             .build())
