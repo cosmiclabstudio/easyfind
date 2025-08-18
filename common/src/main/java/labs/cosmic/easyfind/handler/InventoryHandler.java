@@ -11,22 +11,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class InventoryHandler {
-    private final ItemHistory itemHistory;
+    public InventoryHandler() {}
 
-    public InventoryHandler(ItemHistory itemHistory) {
-        this.itemHistory = itemHistory;
-    }
-
-    public void giveItem(Minecraft minecraft, Item item) {
-        LocalPlayer player = minecraft.player;
+    public static void giveItem(Item item) {
+        LocalPlayer player = Minecraft.getInstance().player;
         if (player == null || !player.getAbilities().instabuild) return;
 
         Inventory inventory = player.getInventory();
         ItemStack itemStack = new ItemStack(item);
         float audioPitch = ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7f + 1.0f) * 2.0f;
-
-        if (ConfigAgent.saveHistory) itemHistory.push(item);
-
+        
         int slot = inventory.selected;
         if (!ConfigAgent.ignoreExisting) {
             for (int i = 0; i <= 8; i++) {

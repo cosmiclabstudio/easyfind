@@ -1,5 +1,6 @@
 package labs.cosmic.easyfind.screens.widgets;
 
+import labs.cosmic.easyfind.handler.InventoryHandler;
 import labs.cosmic.easyfind.screens.Spotlight;
 import labs.cosmic.easyfind.utils.SearchResult;
 import net.minecraft.ChatFormatting;
@@ -10,13 +11,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.function.BiConsumer;
-
 public class SearchboxWidget extends EditBox {
     private final Spotlight spotlight;
     private final Font font;
     private final Component placeholder;
-    private BiConsumer<SearchResult, ResultWidget> resultConsumer = null;
 
     public SearchboxWidget(Spotlight screen, Font font, int x, int y, int width, int height) {
         super(font, x, y, width, height, Component.translatable("efs.title"));
@@ -80,8 +78,8 @@ public class SearchboxWidget extends EditBox {
         final SearchResult result = SearchResult.fromKeyCode(keyCode);
         if (result != null) {
             final ResultWidget resultWidgetEntry = this.spotlight.getResultList().getSelected();
-            if (resultWidgetEntry != null && this.resultConsumer != null) {
-                this.resultConsumer.accept(result, resultWidgetEntry);
+            if (resultWidgetEntry != null) {
+                spotlight.giveItem(resultWidgetEntry.getItem());
             }
             return true;
         }
