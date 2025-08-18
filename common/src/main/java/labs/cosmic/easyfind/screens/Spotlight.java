@@ -75,10 +75,12 @@ public class Spotlight extends Screen {
 
         this.resultListWidget.setLeftPos(resultBoxX);
 
-        super.addRenderableWidget(this.searchboxWidget).setFocused(true);
+        super.addRenderableWidget(this.searchboxWidget);
         super.addRenderableWidget(this.resultListWidget);
 
-        this.setInitialFocus(this.searchboxWidget);
+        // attempt to focus on the searchbox by simulate a tab key
+        // this didn't happen on yarn mapping, so this is more of a workaround.
+        this.keyPressed(GLFW.GLFW_KEY_TAB, 0, 0);
     }
 
     @Override
