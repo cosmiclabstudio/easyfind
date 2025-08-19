@@ -11,7 +11,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -73,7 +72,11 @@ public class Spotlight extends Screen {
             resultBoxY + resultBoxHeight
         );
 
+        //? if =1.20.1 {
         this.resultListWidget.setLeftPos(resultBoxX);
+        //?} elif >=1.21.1 {
+        /*this.resultListWidget.setX(resultBoxX);
+        *///?}
 
         super.addRenderableWidget(this.searchboxWidget);
         super.addRenderableWidget(this.resultListWidget);
@@ -85,7 +88,11 @@ public class Spotlight extends Screen {
 
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
+        //? if =1.20.1 {
         if (ConfigAgent.darkenBG) this.renderBackground(context);
+        //?} elif >=1.21.1 && <1.21.5 {
+        /*if (ConfigAgent.darkenBG) this.renderBackground(context, mouseX, mouseY, delta);
+        *///?}
         super.render(context, mouseX, mouseY, delta);
     }
 
@@ -122,7 +129,7 @@ public class Spotlight extends Screen {
 
     private void addToResult(Item item) {
         boolean hasFeature = true; // Feature check removed for now
-        resultListWidget.children().add(new ResultWidget(Minecraft.getInstance().font, item, hasFeature));
+        resultListWidget.children().add(new ResultWidget(item, hasFeature));
     }
 
     private void selectEntry(final ResultWidget entry) {

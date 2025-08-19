@@ -9,13 +9,6 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public class ConfigAgent {
-    public static ConfigClassHandler<ConfigAgent> HANDLER = ConfigClassHandler.createBuilder(ConfigAgent.class)
-        .id(new ResourceLocation("easyfind", "settings"))
-        .serializer(config -> GsonConfigSerializerBuilder.create(config)
-            .appendGsonBuilder(GsonBuilder::setPrettyPrinting)
-            .setJson5(true)
-            .build())
-        .build();
 
     // Cosmetics
     @SerialEntry

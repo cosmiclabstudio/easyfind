@@ -5,6 +5,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +23,7 @@ public class EasyFind {
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(EasyFind::onClientSetup);
+            MinecraftForge.EVENT_BUS.register(new EasyFindClient());
         }
     }
 

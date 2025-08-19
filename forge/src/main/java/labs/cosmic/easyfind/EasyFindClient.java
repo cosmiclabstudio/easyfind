@@ -12,11 +12,11 @@ import net.minecraftforge.fml.common.Mod;
 @SuppressWarnings({"all", "deprecation", "removal"})
 @Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EasyFindClient {
-    private final ItemHistory itemHistory = new ItemHistory(10);
+    private static final ItemHistory itemHistory = new ItemHistory(10);
     public static KeyMapping searchKey;
 
     @SubscribeEvent
-    public void onClientTick(TickEvent.ClientTickEvent event) {
+    public void clientTick(TickEvent.ClientTickEvent event) {
         Minecraft client = Minecraft.getInstance();
         if (event.phase == TickEvent.Phase.END) {
             while (searchKey != null && searchKey.consumeClick()) {
