@@ -93,7 +93,7 @@ public class Spotlight extends Screen {
         //? if =1.20.1 {
         if (EasyConfig.darkenBG) this.renderBackground(context);
         //?} elif >=1.21.1 && <1.21.5 {
-        /*if (ConfigAgent.darkenBG) this.renderBackground(context, mouseX, mouseY, delta);
+        /*if (EasyConfig.darkenBG) this.renderBackground(context, mouseX, mouseY, delta);
         *///?}
         super.render(context, mouseX, mouseY, delta);
     }
