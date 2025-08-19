@@ -1,15 +1,17 @@
 package labs.cosmic.easyfind.screens.widgets;
 
-import labs.cosmic.easyfind.handler.InventoryHandler;
 import labs.cosmic.easyfind.screens.Spotlight;
 import labs.cosmic.easyfind.utils.SearchResult;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.navigation.ScreenDirection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import org.lwjgl.glfw.GLFW;
+
+import java.awt.*;
 
 public class SearchboxWidget extends EditBox {
     private final Spotlight spotlight;
@@ -21,6 +23,7 @@ public class SearchboxWidget extends EditBox {
         this.spotlight = screen;
         this.font = font;
         this.placeholder = Component.translatable("efs.placeholder").withStyle(ChatFormatting.GRAY);
+
         this.setMaxLength(256);
         this.setEditable(true);
         this.setCanLoseFocus(true);
@@ -31,7 +34,7 @@ public class SearchboxWidget extends EditBox {
             int i = 0;
             while (i < text.length()) {
                 int start = i;
-                int end = i;
+                int end;
                 int color = -1;
                 switch (text.charAt(i)) {
                     case '@':
@@ -87,15 +90,20 @@ public class SearchboxWidget extends EditBox {
     }
 
     @Override
-    public void render(net.minecraft.client.gui.GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        //? if =1.20.1 {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
         super.render(graphics, mouseX, mouseY, delta);
+        //?} elif >=1.21.1 {
+    /*public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        super.renderWidget(graphics, mouseX, mouseY, delta);
+        *///?}
         if (this.placeholder != null && this.getValue().isEmpty()) {
             graphics.drawString(
                 this.font,
                 this.placeholder,
                 this.getX() + 4,
                 this.getY() + (this.getHeight() - 8) / 2,
-                0xE0E0E0
+                Color.GRAY.getRGB()
             );
         }
     }

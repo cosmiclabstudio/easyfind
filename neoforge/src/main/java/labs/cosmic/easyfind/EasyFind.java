@@ -1,20 +1,24 @@
 package labs.cosmic.easyfind;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import labs.cosmic.easyfind.screens.Spotlight;
+import labs.cosmic.easyfind.utils.ItemHistory;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
 import org.lwjgl.glfw.GLFW;
 
 @Mod(Constants.MOD_ID)
 public class EasyFind {
+    private static final ItemHistory itemHistory = new ItemHistory(10);
     public static KeyMapping searchKey;
 
     public EasyFind(IEventBus modEventBus) {
@@ -22,7 +26,7 @@ public class EasyFind {
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(EasyFind::onClientSetup);
-            modEventBus.addListener(EasyFind::onClientTick);
+            NeoForge.EVENT_BUS.addListener(EasyFind::onClientTick);
         }
     }
 
@@ -39,15 +43,12 @@ public class EasyFind {
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        Minecraft client = Minecraft.getInstance();
-        if (event.phase == TickEvent.Phase.END) {
-            while (searchKey.consumeClick()) {
-                if (client.player != null && client.player.isCreative()) {
-                    client.setScreen(EasyFindCommon.spotlight);
-                }
+    public static void onClientTick(ClientTickEvent.Post event) {
+    Minecraft client = Minecraft.getInstance();
+        while (searchKey.consumeClick()) {
+            if (client.player != null && client.player.isCreative()) {
+                client.setScreen(new Spotlight(itemHistory));
             }
         }
-
     }
 }
