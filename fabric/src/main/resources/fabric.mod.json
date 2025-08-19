@@ -21,6 +21,9 @@
     ],
     "main": [
       "labs.cosmic.easyfind.EasyFind"
+    ],
+    "modmenu": [
+      "labs.cosmic.easyfind.ModMenu"
     ]
   },
   "depends": {

@@ -1,6 +1,6 @@
 package labs.cosmic.easyfind.screens.widgets;
 
-import labs.cosmic.easyfind.config.ConfigAgent;
+import labs.cosmic.easyfind.config.EasyConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -42,7 +42,7 @@ public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
         final Rarity rarity = itemStack.getRarity();
         Component meta = Component.translatable(item.getDescriptionId() + ".desc").withStyle(ChatFormatting.GRAY);
         if (isEnabled) {
-            int color = ConfigAgent.coloredRarity ?
+            int color = EasyConfig.coloredRarity ?
                 /*? =1.20.1 {*/ rarity.color.getId() /*?} >=1.21.1 {*/ /*rarity.color().getId() *//*?}*/
                 : 0xFFFFFF;
             text = Component.translatable(item.getDescriptionId()).withStyle(Objects.requireNonNull(ChatFormatting.getById(color)));
@@ -52,7 +52,7 @@ public class ResultWidget extends ObjectSelectionList.Entry<ResultWidget> {
         }
         // Render item using ItemRenderer
         context.renderItem(itemStack, x + 2, y + 2);
-        if (ConfigAgent.showDescription && !meta.getString().contains(".desc")) {
+        if (EasyConfig.showDescription && !meta.getString().contains(".desc")) {
             context.drawString(this.font, text, x + 22, y + 1, Color.WHITE.getRGB(), false);
             context.drawString(this.font, meta, x + 22, y + 12, Color.GRAY.getRGB(), false);
         } else {

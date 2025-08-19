@@ -1,12 +1,16 @@
 package labs.cosmic.easyfind;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import dev.isxander.yacl3.api.YetAnotherConfigLib;
+import labs.cosmic.easyfind.config.EasyConfigBuilder;
 import labs.cosmic.easyfind.screens.Spotlight;
 import labs.cosmic.easyfind.utils.ItemHistory;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -23,6 +27,11 @@ public class EasyFind {
 
     public EasyFind(IEventBus modEventBus) {
         EasyFindCommon.init();
+
+        ModLoadingContext.get().registerExtensionPoint(
+            IConfigScreenFactory.class,
+            () -> (client, parent) -> EasyConfigBuilder.init(parent)
+        );
 
         if (FMLEnvironment.dist == Dist.CLIENT) {
             modEventBus.addListener(EasyFind::onClientSetup);
