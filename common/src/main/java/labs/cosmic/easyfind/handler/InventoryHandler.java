@@ -1,11 +1,10 @@
 package labs.cosmic.easyfind.handler;
 
-import labs.cosmic.easyfind.config.ConfigAgent;
+import labs.cosmic.easyfind.config.EasyConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.protocol.game.ServerboundSetCreativeModeSlotPacket;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +24,7 @@ public class InventoryHandler {
         float audioPitch = ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7f + 1.0f) * 2.0f;
 
         int slot;
-        if (!ConfigAgent.ignoreExisting) {
+        if (!EasyConfig.ignoreExisting) {
             for (int i = 0; i <= 8; i++) {
                 if (inventory.getItem(i).is(item)) {
                     setSlot(i);
@@ -41,15 +40,15 @@ public class InventoryHandler {
                 break;
             }
         }
-        if (ConfigAgent.forcedReplace) slot = getSlot();
+        if (EasyConfig.forcedReplace) slot = getSlot();
         else if (emptySlot == -1) {
             slot = getSlot();
-            slot = switch (ConfigAgent.replaceNeighbor) {
+            slot = switch (EasyConfig.replaceNeighbor) {
                 case CURRENT -> slot;
                 case NEXT -> slot + 1;
                 case PREVIOUS -> slot - 1;
             };
-            if (ConfigAgent.replaceNeighbor != ConfigAgent.ReplaceNeighbor.CURRENT)
+            if (EasyConfig.replaceNeighbor != EasyConfig.ReplaceNeighbor.CURRENT)
                 slot = switch (slot) {
                     case -1 -> 8;
                     case 9 -> 0;

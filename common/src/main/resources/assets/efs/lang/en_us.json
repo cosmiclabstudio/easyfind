@@ -4,24 +4,42 @@
   "efs.title": "EasyFind item search",
   "efs.placeholder": "Search for block or item...",
   "efs.404": "Not Found",
-  "efs.settei": "Settings",
+  "efs.settei": "EasyFind Settings",
 
-  "easyfind.midnightconfig.title": "EasyFind Configuration",
-  "easyfind.midnightconfig.showDescription": "Show item description",
-  "easyfind.midnightconfig.darkenBG": "Darkened Background",
-  "easyfind.midnightconfig.coloredRarity": "Colored rarity of item",
-  "easyfind.midnightconfig.showDisabledItem": "Show disabled item",
-  "easyfind.midnightconfig.saveHistory": "Save history of given items",
-  
-  "easyfind.midnightconfig.keepScreenOn": "Do not close after picked an item",
-  "easyfind.midnightconfig.enum.KeepScreen.SHIFT": "Shift Only",
-  "easyfind.midnightconfig.enum.KeepScreen.ALWAYS": "Always Close",
-  
-  "easyfind.midnightconfig.replaceNeighbor": "When hotbar is full, replace on the",
-  "easyfind.midnightconfig.enum.ReplaceNeighbor.CURRENT": "Current slot",
-  "easyfind.midnightconfig.enum.ReplaceNeighbor.NEXT": "Next slot",
-  "easyfind.midnightconfig.enum.ReplaceNeighbor.PREVIOUS": "Previous slot",
+  "efs.cosmetics": "Cosmetic",
+  "efs.behaviour": "Behaviour",
 
-  "easyfind.midnightconfig.forcedReplace": "Force replace current slot",
-  "easyfind.midnightconfig.ignoreExisting": "Ignore existing item (duplicate)"
+  "easyfind.title": "EasyFind Configuration",
+
+  "easyfind.showDescription": "Show item description",
+  "easyfind.showDescription.desc": "Displays additional information about items in the search interface",
+
+  "easyfind.darkenBG": "Darkened Background",
+  "easyfind.darkenBG.desc": "Adds a darkened overlay behind the search interface for better visibility",
+
+  "easyfind.coloredRarity": "Colored rarity of item",
+  "easyfind.coloredRarity.desc": "Colors item names based on their rarity (common, uncommon, rare, epic, etc.)",
+
+  "easyfind.showDisabledItem": "Show disabled item",
+  "easyfind.showDisabledItem.desc": "Displays items that are currently disabled or unavailable in search results",
+
+  "easyfind.saveHistory": "Save history of given items",
+  "easyfind.saveHistory.desc": "Keeps track of previously selected items for quick access and suggestions",
+
+  "easyfind.keepScreenOn": "Do not close after picked an item",
+  "easyfind.keepScreenOn.desc": "Controls when the search screen closes after selecting an item",
+  "easyfind.enum.KeepScreen.SHIFT": "Shift Only",
+  "easyfind.enum.KeepScreen.ALWAYS": "Always Close",
+
+  "easyfind.replaceNeighbor": "When hotbar is full, what slot to replace",
+  "easyfind.replaceNeighbor.desc": "Determines which slot to replace when your hotbar is full and you select a new item",
+  "easyfind.enum.ReplaceNeighbor.CURRENT": "Current slot",
+  "easyfind.enum.ReplaceNeighbor.NEXT": "Next slot",
+  "easyfind.enum.ReplaceNeighbor.PREVIOUS": "Previous slot",
+
+  "easyfind.forcedReplace": "Force replace current slot",
+  "easyfind.forcedReplace.desc": "Always replaces the currently selected hotbar slot, even if it contains items",
+
+  "easyfind.ignoreExisting": "Ignore existing item (duplicate)",
+  "easyfind.ignoreExisting.desc": "Prevents adding items that already exist in your inventory to avoid duplicates"
 }

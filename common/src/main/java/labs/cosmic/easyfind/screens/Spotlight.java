@@ -1,6 +1,6 @@
 package labs.cosmic.easyfind.screens;
 
-import labs.cosmic.easyfind.config.ConfigAgent;
+import labs.cosmic.easyfind.config.EasyConfig;
 import labs.cosmic.easyfind.handler.InventoryHandler;
 import labs.cosmic.easyfind.handler.SearchHandler;
 import labs.cosmic.easyfind.screens.widgets.ResultListWidget;
@@ -28,11 +28,13 @@ public class Spotlight extends Screen {
     private Item lastClickItemEntry;
     private boolean isShiftDown = false;
     private long lastClickTime;
+    private static Minecraft client;
 
     public Spotlight(ItemHistory itemHistory) {
         super(Component.nullToEmpty(I18n.get("efs.title")));
         this.itemHistory = itemHistory;
         this.searchManager = new SearchHandler();
+        client = Minecraft.getInstance();
     }
 
     @Override
@@ -89,7 +91,7 @@ public class Spotlight extends Screen {
     @Override
     public void render(GuiGraphics context, int mouseX, int mouseY, float delta) {
         //? if =1.20.1 {
-        if (ConfigAgent.darkenBG) this.renderBackground(context);
+        if (EasyConfig.darkenBG) this.renderBackground(context);
         //?} elif >=1.21.1 && <1.21.5 {
         /*if (ConfigAgent.darkenBG) this.renderBackground(context, mouseX, mouseY, delta);
         *///?}
@@ -113,7 +115,7 @@ public class Spotlight extends Screen {
         this.resultListWidget.children().clear();
 
         if (query.isEmpty()) {
-            if (!ConfigAgent.saveHistory) return;
+            if (!EasyConfig.saveHistory) return;
             this.itemHistory.getItemHistory().forEach(this::addToResult);
         } else {
             searchManager.search(query).forEach(this::addToResult);
@@ -128,7 +130,9 @@ public class Spotlight extends Screen {
     }
 
     private void addToResult(Item item) {
-        boolean hasFeature = true; // Feature check removed for now
+        assert client.player != null;
+        boolean hasFeature = client.player.connection.isFeatureEnabled(item.requiredFeatures());
+        if (!hasFeature && !EasyConfig.showDisabledItem) return;
         resultListWidget.children().add(new ResultWidget(item, hasFeature));
     }
 
@@ -187,7 +191,7 @@ public class Spotlight extends Screen {
     // TODO: Configurable, also refactor this.
     public void giveItem(Item item) {
         InventoryHandler.giveItem(item);
-        if (ConfigAgent.saveHistory) addToHistory(item);
+        if (EasyConfig.saveHistory) addToHistory(item);
         this.onClose();
     }
 
@@ -213,7 +217,7 @@ public class Spotlight extends Screen {
 
     @Override
     public void onClose() {
-        if (ConfigAgent.keepScreenOn == ConfigAgent.KeepScreen.SHIFT) {
+        if (EasyConfig.keepScreenOn == EasyConfig.KeepScreen.SHIFT) {
             if (this.isShiftDown) return;
         }
         super.onClose();

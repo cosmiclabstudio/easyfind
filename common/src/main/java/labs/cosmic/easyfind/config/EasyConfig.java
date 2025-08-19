@@ -1,17 +1,19 @@
 package labs.cosmic.easyfind.config;
 
-// Temporary disable config so I can test out first.
-
-import com.google.gson.GsonBuilder;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import net.minecraft.resources.ResourceLocation;
+import dev.isxander.yacl3.platform.YACLPlatform;
 
-public class ConfigAgent {
+public class EasyConfig {
+    public static ConfigClassHandler<EasyConfig> HANDLER = ConfigClassHandler.createBuilder(EasyConfig.class)
+        .serializer(config -> GsonConfigSerializerBuilder.create(config)
+            .setPath(YACLPlatform.getConfigDir().resolve("easyfind.json"))
+            .build())
+        .build();
 
     // Cosmetics
-    @SerialEntry
+    @SerialEntry(comment = "Darkened Background")
     public static boolean darkenBG = true;
     @SerialEntry
     public static boolean showDescription = true;
@@ -30,7 +32,7 @@ public class ConfigAgent {
     @SerialEntry
     public static boolean saveHistory = true;
     @SerialEntry
-    public static boolean showDisabledItem;
+    public static boolean showDisabledItem = false;
 
     public enum ReplaceNeighbor {CURRENT, NEXT, PREVIOUS}
     public enum KeepScreen {SHIFT, ALWAYS}
