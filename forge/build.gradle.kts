@@ -6,10 +6,6 @@ plugins {
     id("dev.kikugie.fletching-table") version "0.1.0-alpha.13"
 }
 
-mixin {
-    add(sourceSets.main.get(), "${mod.id}.refmap.json")
-}
-
 legacyForge {
     enable {
         forgeVersion = "${mod.mc}-${commonMod.dep("forge")}"

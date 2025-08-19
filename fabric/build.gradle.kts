@@ -26,6 +26,7 @@ dependencies {
     modImplementation("com.terraformersmc:modmenu:${commonMod.dep("modmenu")}")
     modImplementation("dev.isxander:yet-another-config-lib:${commonMod.dep("yacl")}-fabric")
     implementation("me.xdrop:fuzzywuzzy:1.4.0")
+    include("me.xdrop:fuzzywuzzy:1.4.0")
 }
 
 loom {
@@ -40,9 +41,5 @@ loom {
             configName = "Fabric Server"
             ideConfigGenerated(true)
         }
-    }
-
-    mixin {
-        defaultRefmapName = "${mod.id}.refmap.json"
     }
 }
